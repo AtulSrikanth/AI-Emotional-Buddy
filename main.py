@@ -6,8 +6,6 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 from typing import Dict, Optional
 from textblob import TextBlob
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import RedirectResponse
 
 load_dotenv()
 
@@ -296,9 +294,6 @@ class MentalHealthMessage(BaseModel):
 
 companion_system = IntegratedMentalHealthCompanion()
 
-# Serve a small UI folder at /ui
-app.mount("/ui", StaticFiles(directory="static"), name="ui")
-
 @app.get("/")
 def home():
     return {
@@ -308,15 +303,9 @@ def home():
         "endpoints": {
             "start_session": "POST /start-mental-health-journey",
             "chat": "POST /mental-health-guide",
-            "resources": "GET /mental-health-resources",
-            "ui": "GET /ui/index.html"
+            "resources": "GET /mental-health-resources"
         }
     }
-
-@app.get("/open-ui")
-def open_ui():
-    # Convenient redirect to the static UI
-    return RedirectResponse(url="/ui/index.html")
 
 @app.post("/start-mental-health-journey")
 def start_mental_health_session():
@@ -364,5 +353,4 @@ if __name__ == "__main__":
     print("Focus: Ethical resource guidance + Jungian support")
     print("Access: http://localhost:8000")
     print("API Docs: http://localhost:8000/docs")
-    print("UI: http://localhost:8000/open-ui")
     uvicorn.run(app, host="0.0.0.0", port=8000)
