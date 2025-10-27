@@ -10,10 +10,9 @@ from textblob import TextBlob
 load_dotenv()
 
 app = FastAPI(
-    title="Jungian Mental Health Guide",
+    title="AI Therapist Sample Model",
     description="Mental health resource guidance API",
-    version="4.0"
-)
+    )
 
 # ==================== MENTAL HEALTH RESOURCE SYSTEM ====================
 
